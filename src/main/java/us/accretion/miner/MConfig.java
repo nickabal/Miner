@@ -61,6 +61,9 @@ public class MConfig{
 			config.getNode("check-pool-interval").setValue(config.getNode("check-pool-interval").getInt(15))
 			.setComment("Update pool stats and disburse funds every X minutes.");
 			
+			config.getNode("net-retry-count").setValue(config.getNode("net-retry-count").getInt(2))
+			.setComment("How many times to try again if updating pool net request fails.");
+			
 	        loadPlayerStats();
 	        /*---------------*/
 	                

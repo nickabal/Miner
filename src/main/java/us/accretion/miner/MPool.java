@@ -36,6 +36,11 @@ public class MPool {
 	
 	public static void checkPool() {
 		
+	  Integer retryCount = 0;
+	  Integer maxRetries = plugin.cfgs.getInt("net-retry-count"); 
+	  
+	  while (retryCount<maxRetries) {
+		
 	  try {	  
 		    //String httpsURL = "https://api.nanopool.org/v1/xmr/user/47GGAX6QRMnKgaABHCnM8BHbaseovnfBCbaCHB7zTU2jShGywfFBKtKA6rrB7CGc5EUam7yUHhuzsUuAMbLj9XcB9Rwnjiz";
 		    String httpsURL = plugin.cfgs.getString("pool-address");
@@ -101,12 +106,17 @@ public class MPool {
 	        		  }
 	        	}
 	        	MLogger.info("Updated pool stats!"); 
+	        	break;
 	        } else { 
+	  		    retryCount++;
 	        	MLogger.severe("Failed to update pool stats!"); 
 	        }
 
 	  } catch(IOException e){
+		  retryCount++;
 	      MLogger.warning("Failed to update from pool: "+e);
+	  }
+	  
 	  }
 	}
 }
